@@ -411,7 +411,7 @@ registerProcessor('stream_processor', StreamProcessor);
   var WavStreamPlayer = class {
     /**
      * Creates a new WavStreamPlayer instance
-     * @param {{sampleRate?: number}} options
+     * @param {{sampleRate?: number, onStop?: function}} options
      * @returns {WavStreamPlayer}
      */
     constructor({ sampleRate = 44100, onStop } = {}) {

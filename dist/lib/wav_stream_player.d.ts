@@ -5,17 +5,18 @@
 export class WavStreamPlayer {
     /**
      * Creates a new WavStreamPlayer instance
-     * @param {{sampleRate?: number}} options
+     * @param {{sampleRate?: number, onStop?: function}} options
      * @returns {WavStreamPlayer}
      */
     constructor({ sampleRate, onStop }?: {
         sampleRate?: number;
+        onStop?: Function;
     });
     scriptSrc: any;
     sampleRate: number;
     context: any;
     stream: any;
-    onStop: any;
+    onStop: Function;
     analyser: any;
     trackSampleOffsets: {};
     interruptedTrackIds: {};
