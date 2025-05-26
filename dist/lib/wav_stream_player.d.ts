@@ -50,22 +50,22 @@ export class WavStreamPlayer {
     /**
      * Gets the offset (sample count) of the currently playing stream
      * @param {boolean} [interrupt]
-     * @returns {{trackId: string|null, offset: number, currentTime: number}}
+     * @returns {Promise<{trackId: string|null, offset: number, currentTime: number}>}
      */
-    getTrackSampleOffset(interrupt?: boolean): {
+    getTrackSampleOffset(interrupt?: boolean): Promise<{
         trackId: string | null;
         offset: number;
         currentTime: number;
-    };
+    }>;
     /**
      * Strips the current stream and returns the sample offset of the audio
      * @param {boolean} [interrupt]
-     * @returns {{trackId: string|null, offset: number, currentTime: number}}
+     * @returns {Promise<{trackId: string|null, offset: number, currentTime: number}>}
      */
-    interrupt(): {
+    interrupt(): Promise<{
         trackId: string | null;
         offset: number;
         currentTime: number;
-    };
+    }>;
 }
 //# sourceMappingURL=wav_stream_player.d.ts.map

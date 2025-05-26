@@ -519,7 +519,7 @@ registerProcessor('stream_processor', StreamProcessor);
     /**
      * Gets the offset (sample count) of the currently playing stream
      * @param {boolean} [interrupt]
-     * @returns {{trackId: string|null, offset: number, currentTime: number}}
+     * @returns {Promise<{trackId: string|null, offset: number, currentTime: number}>}
      */
     async getTrackSampleOffset(interrupt = false) {
       if (!this.stream) {
@@ -544,10 +544,10 @@ registerProcessor('stream_processor', StreamProcessor);
     /**
      * Strips the current stream and returns the sample offset of the audio
      * @param {boolean} [interrupt]
-     * @returns {{trackId: string|null, offset: number, currentTime: number}}
+     * @returns {Promise<{trackId: string|null, offset: number, currentTime: number}>}
      */
     async interrupt() {
-      return this.getTrackSampleOffset(true);
+      return await this.getTrackSampleOffset(true);
     }
   };
   globalThis.WavStreamPlayer = WavStreamPlayer;
