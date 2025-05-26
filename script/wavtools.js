@@ -314,8 +314,8 @@ class StreamProcessor extends AudioWorkletProcessor {
     super();
     this.hasStarted = false;
     this.hasInterrupted = false;
-    this.outputBuffers = [];
     this.bufferLength = 128;
+    this.outputBuffers = [{ buffer: new Float32Array(this.bufferLength), trackId: null }];
     this.write = { buffer: new Float32Array(this.bufferLength), trackId: null };
     this.writeOffset = 0;
     this.trackSampleOffsets = {};
@@ -373,6 +373,7 @@ class StreamProcessor extends AudioWorkletProcessor {
     const outputChannelData = output[0];
     const outputBuffers = this.outputBuffers;
     if (this.hasInterrupted) {
+      outputChannelData.fill(0);
       this.port.postMessage({ event: 'stop' });
       return false;
     } else if (outputBuffers.length) {
@@ -388,9 +389,11 @@ class StreamProcessor extends AudioWorkletProcessor {
       }
       return true;
     } else if (this.hasStarted) {
+      outputChannelData.fill(0);
       this.port.postMessage({ event: 'stop' });
       return false;
     } else {
+      outputChannelData.fill(0);
       return true;
     }
   }
@@ -411,11 +414,12 @@ registerProcessor('stream_processor', StreamProcessor);
      * @param {{sampleRate?: number}} options
      * @returns {WavStreamPlayer}
      */
-    constructor({ sampleRate = 44100 } = {}) {
+    constructor({ sampleRate = 44100, onStop } = {}) {
       this.scriptSrc = StreamProcessorSrc;
       this.sampleRate = sampleRate;
       this.context = null;
       this.stream = null;
+      this.onStop = onStop;
       this.analyser = null;
       this.trackSampleOffsets = {};
       this.interruptedTrackIds = {};
